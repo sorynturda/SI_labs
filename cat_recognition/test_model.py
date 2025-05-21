@@ -9,12 +9,14 @@ from dotenv import dotenv_values
 
 vars = dotenv_values(".env")
 total = int(vars.get("train_total", 0))
+optimizer =['adamw', 'rmsprop'] 
 
 # Load trained model
-model = load_model(f'./models/{total}_model_keras.h5')
+# model = load_model(f'./models/{total}_model_keras.h5')
+model = load_model(f'./models/{optimizer[0]}_{total}_model_keras.h5')
 
 img_width, img_height = 150, 150
-test_dir = './test/'
+test_dir = './test_rand/'
 
 # Load and predict
 testImages = os.listdir(test_dir)

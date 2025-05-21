@@ -1,17 +1,21 @@
-from keras.models import load_model, Sequential
+from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Activation, Dropout, Flatten, Dense
-from tensorflow.keras.preprocessing.image import ImageDataGenerator, img_to_array
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
-
+from time import time
+from datetime import timedelta
+from dotenv import dotenv_values
 from PIL import Image
 import numpy as np
 import os
-from dotenv import dotenv_values
+
+start_time = time()
 
 vars = dotenv_values(".env")
 total = int(vars.get("train_total", 0))
-print(total)
+
+optimizer = ['adamw', 'rmsprop']
 
 # input resolution of training images
 img_width, img_height = 150, 150
@@ -66,7 +70,7 @@ model.add(Activation('sigmoid')) # sigmoid produce probability value
 # compile the mode (rmsprop is generally okay for image classifier)
 model.compile(
     loss='binary_crossentropy',
-    optimizer='rmsprop',
+    optimizer=optimizer[0],
     metrics =['accuracy']
 )
 
@@ -91,5 +95,10 @@ model.fit(
 # save the model
 
 
-model.save_weights(f'./models/{total}_model.weights.h5')
-model.save(f'./models/{total}_model_keras.h5')
+model.save_weights(f'./models/{optimizer[0]}_{total}_model.weights.h5')
+model.save(f'./models/{optimizer[0]}_{total}_model_keras.h5')
+
+end_time = time()
+
+print(f"----------- {round(end_time - start_time, 2)} seconds -----------")
+print(f"----------- {timedelta(seconds=end_time-start_time)} -----------")
