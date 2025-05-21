@@ -10,8 +10,8 @@ import os
 from dotenv import dotenv_values
 
 vars = dotenv_values(".env")
-total = int(vars.get("total_train", 0))
-
+total = int(vars.get("train_total", 0))
+print(total)
 
 # input resolution of training images
 img_width, img_height = 150, 150
