@@ -1,0 +1,21 @@
+#!/bin/bash
+source .env
+
+tmp_total=`ls ./train/SmallPetImages/Dog | wc -l`
+
+rm ./test_rand/dog* 2>/dev/null
+curr=`ls ./test_rand/ | grep dog | wc -l`
+
+echo $curr
+
+
+
+while [ $curr -lt $(($test_total - 1)) ]
+do
+  curr=`ls ./test_rand/ | grep dog | wc -l`
+  echo $curr
+  file="$(($RANDOM % $tmp_total + 1)).jpg"
+  if ! test -f ./train/SmallPetImages/Dog/$file; then
+    cp ./train/PetImages/Dog/$file ./test_rand/dog_$file
+  fi
+done

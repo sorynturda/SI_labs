@@ -5,8 +5,13 @@ from PIL import Image
 import numpy as np
 import os
 
+from dotenv import dotenv_values
+
+vars = dotenv_values(".env")
+total = int(vars.get("total_train", 0))
+
 # Load trained model
-model = load_model('model_keras.h5')
+model = load_model(f'./models/{total}_model_keras.h5')
 
 img_width, img_height = 150, 150
 test_dir = './test/'

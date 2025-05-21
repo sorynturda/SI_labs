@@ -7,6 +7,11 @@ from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from PIL import Image
 import numpy as np
 import os
+from dotenv import dotenv_values
+
+vars = dotenv_values(".env")
+total = int(vars.get("total_train", 0))
+
 
 # input resolution of training images
 img_width, img_height = 150, 150
@@ -84,5 +89,7 @@ model.fit(
 )
 
 # save the model
-model.save_weights('500_model.weights.h5')
-model.save('500_model_keras.h5')
+
+
+model.save_weights(f'./models/{total}_model.weights.h5')
+model.save(f'./models/{total}_model_keras.h5')
